@@ -25,6 +25,19 @@ module Styles = {
       top(pct(100.0)),
       left(px(-1)),
       margin3(~top=px(2), ~h=zero, ~bottom=zero),
+      zIndex(10),
+    ]);
+
+  let overlay = visible =>
+    style([
+      display(visible ? `block : `none),
+      position(`fixed),
+      width(`percent(100.0)),
+      height(`percent(100.0)),
+      top(zero),
+      left(zero),
+      background(transparent),
+      zIndex(1),
     ]);
 };
 
@@ -131,6 +144,10 @@ let make = (~className, ~country: option(string), ~onChange, _children) => {
             /> :
             ReasonReact.null
         }
+        <div
+          className={Styles.overlay(dropdownVisible)}
+          onClick={self.handle(buttonClick)}
+        />
       </div>;
     },
   };
