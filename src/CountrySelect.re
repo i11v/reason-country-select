@@ -14,6 +14,20 @@ type action =
 
 let component = ReasonReact.reducerComponent("CountrySelect");
 
+module Styles = {
+  open Css;
+
+  let container = style([position(`relative)]);
+
+  let dropdown =
+    style([
+      position(`absolute),
+      top(pct(100.0)),
+      left(px(-1)),
+      margin3(~top=px(2), ~h=zero, ~bottom=zero),
+    ]);
+};
+
 let make = (~className, ~country: option(string), ~onChange, _children) => {
   let buttonClick = (event, self) => {
     event->ReactEvent.Mouse.preventDefault;
@@ -104,13 +118,14 @@ let make = (~className, ~country: option(string), ~onChange, _children) => {
         | _ => true
         };
 
-      <div className>
+      <div className={Css.merge([className, Styles.container])}>
         <Button disabled=buttonDisabled onClick={self.handle(buttonClick)}>
           {ReasonReact.string(buttonLabel)}
         </Button>
         {
           dropdownVisible ?
             <DropdownList
+              className=Styles.dropdown
               options=countries
               onChange={self.handle(countryChange)}
             /> :

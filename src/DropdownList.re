@@ -8,7 +8,37 @@ type action =
 
 let component = ReasonReact.reducerComponent("Dropdown");
 
-let make = (~options, ~onChange, _children) => {
+module Styles = {
+  open Css;
+
+  let container =
+    style([
+      width(px(230)),
+      height(px(200)),
+      border(px(1), solid, rgba(0, 0, 0, 0.08)),
+      background(white),
+      borderRadius(px(2)),
+    ]);
+
+  let searchInputHeight = px(35);
+  let searchInput =
+    style([
+      width(pct(100.0)),
+      height(searchInputHeight),
+      borderBottom(px(1), solid, rgba(0, 0, 0, 0.08)),
+    ]);
+
+  let countryList =
+    style([
+      width(pct(100.0)),
+      height(`calc((`sub, `percent(100.0), searchInputHeight))),
+      padding2(~v=px(4), ~h=zero),
+      boxSizing(`borderBox),
+      overflow(`scroll),
+    ]);
+};
+
+let make = (~className="", ~options, ~onChange, _children) => {
   ...component,
   initialState: () => {filteredCountries: options, text: ""},
   reducer: (action, _state) =>
@@ -27,19 +57,22 @@ let make = (~options, ~onChange, _children) => {
   render: self => {
     let {filteredCountries} = self.state;
 
-    <div>
+    <div className=(Css.merge([className, Styles.container]))>
       <TextInput
+        className=Styles.searchInput
         placeholder="Search"
         onChange=(text => self.send(InputChange(text)))
       />
-      (
-        filteredCountries
-        |> List.map((country: FetchCountries.country) =>
-             <DropdownListItem key=country.value country onClick=onChange />
-           )
-        |> Array.of_list
-        |> ReasonReact.array
-      )
+      <div className=Styles.countryList>
+        (
+          filteredCountries
+          |> List.map((country: FetchCountries.country) =>
+               <DropdownListItem key=country.value country onClick=onChange />
+             )
+          |> Array.of_list
+          |> ReasonReact.array
+        )
+      </div>
     </div>;
   },
 };

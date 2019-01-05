@@ -2,7 +2,28 @@
 
 let component = ReasonReact.statelessComponent("DropdownListItem");
 
-let make = (~country: FetchCountries.country, ~onClick, _children) => {
+module Styles = {
+  open Css;
+
+  let container = style([padding2(~v=px(4), ~h=px(10))]);
+
+  let icon =
+    style([
+      width(px(14)),
+      margin4(~top=zero, ~right=px(8), ~bottom=zero, ~left=zero),
+    ]);
+
+  let label =
+    style([
+      color(Theme.Colors.n800),
+      fontFamily(Theme.fontFamilySans),
+      fontSize(Theme.fontSizeSM),
+      lineHeight(Theme.fontSizeMD),
+    ]);
+};
+
+let make =
+    (~className="", ~country: FetchCountries.country, ~onClick, _children) => {
   let handleClick = _event => onClick(country);
 
   {
@@ -10,9 +31,17 @@ let make = (~country: FetchCountries.country, ~onClick, _children) => {
     render: _self => {
       let countryCode = country.value;
 
-      <div onClick=handleClick>
-        <span className={j|flag-icon flag-icon-$countryCode|j} />
-        (ReasonReact.string(country.label))
+      <div
+        className=(Css.merge([className, Styles.container]))
+        onClick=handleClick>
+        <span
+          className=(
+            Css.merge([{j|flag-icon flag-icon-$countryCode|j}, Styles.icon])
+          )
+        />
+        <span className=Styles.label>
+          (ReasonReact.string(country.label))
+        </span>
       </div>;
     },
   };
