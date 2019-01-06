@@ -23,7 +23,8 @@
     "reason-react",
     "bs-fetch",
     "@glennsl/bs-json",
-    "bs-css"
+    "bs-css",
+    "bs-webapi"
   ],
   "refmt": 3
 }
