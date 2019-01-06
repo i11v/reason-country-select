@@ -1,4 +1,12 @@
-# country-select
+# Reason Country Select
+
+## Features
+
+The component
+- [x] loads country list from remote server using bs-fetch,
+- [x] provides ability to filter countries,
+- [x] renders only visible options (using virtualized list view),
+- [ ] supports keyboard
 
 ## Run Project
 
