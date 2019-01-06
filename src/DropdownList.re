@@ -63,16 +63,11 @@ let make = (~className="", ~options, ~onChange, _children) => {
         placeholder="Search"
         onChange=(text => self.send(InputChange(text)))
       />
-      <div className=Styles.countryList>
-        (
-          filteredCountries
-          |> List.map((country: FetchCountries.country) =>
-               <DropdownListItem key=country.value country onClick=onChange />
-             )
-          |> Array.of_list
-          |> ReasonReact.array
-        )
-      </div>
+      <VirtualizedList
+        className=Styles.countryList
+        options=filteredCountries
+        renderItem=(country => <DropdownListItem country onClick=onChange />)
+      />
     </div>;
   },
 };

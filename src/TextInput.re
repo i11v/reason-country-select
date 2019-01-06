@@ -13,11 +13,7 @@ let component = ReasonReact.reducerComponent("TextInput");
 module Styles = {
   open Css;
 
-  let container =
-    style([
-      display(`flex),
-      transition(~duration=300, ~timingFunction=`easeInOut, "box-shadow"),
-    ]);
+  let container = style([display(`flex), transition(~duration=300, ~timingFunction=`easeInOut, "box-shadow")]);
 
   let icon = focused =>
     style([
@@ -42,8 +38,7 @@ module Styles = {
     ]);
 };
 
-let make =
-    (~className="", ~placeholder="", ~onChange=(_v: string) => (), _children) => {
+let make = (~className="", ~placeholder="", ~onChange=(_v: string) => (), _children) => {
   ...component,
 
   initialState: () => {focused: false, text: ""},
@@ -63,9 +58,7 @@ let make =
     };
 
     <div className={Css.merge([className, Styles.container])}>
-      <span className={Styles.icon(self.state.focused)}>
-        <IconMagnifier />
-      </span>
+      <span className={Styles.icon(self.state.focused)}> <IconMagnifier /> </span>
       <input
         className=Styles.input
         placeholder

@@ -5,7 +5,7 @@ let component = ReasonReact.statelessComponent("DropdownListItem");
 module Styles = {
   open Css;
 
-  let container = style([padding2(~v=px(4), ~h=px(10))]);
+  let container = style([display(`flex), padding2(~v=px(4), ~h=px(10))]);
 
   let icon =
     style([
@@ -19,6 +19,9 @@ module Styles = {
       fontFamily(Theme.fontFamilySans),
       fontSize(Theme.fontSizeSM),
       lineHeight(Theme.fontSizeMD),
+      overflow(`hidden),
+      whiteSpace(`nowrap),
+      textOverflow(`ellipsis),
     ]);
 };
 
